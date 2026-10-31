@@ -1,0 +1,228 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Driver Profile</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #0b1220;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 25px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            color: #172033;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #777;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ddd;
+            border-radius: 9px;
+            font-size: 15px;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 9px;
+            background: #172033;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #263653;
+        }
+
+        @media(max-width:600px) {
+            .row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+
+        <div class="icon">🚗</div>
+
+        <h1>Driver Profile</h1>
+
+        <p class="subtitle">
+            Enter your driver and vehicle details
+        </p>
+
+    </div>
+
+    <form method="POST">
+
+        <div class="form-group">
+
+            <label>Driver Name</label>
+
+            <input
+                type="text"
+                name="driver_name"
+                placeholder="Enter driver name"
+                required
+            >
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="form-group">
+
+                <label>Age</label>
+
+                <input
+                    type="number"
+                    name="age"
+                    placeholder="Enter age"
+                    min="18"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Vehicle Type</label>
+
+                <select name="vehicle_type" required>
+
+                    <option value="">
+                        Select Vehicle
+                    </option>
+
+                    <option value="Car">
+                        Car
+                    </option>
+
+                    <option value="SUV">
+                        SUV
+                    </option>
+
+                    <option value="Truck">
+                        Truck
+                    </option>
+
+                    <option value="Bus">
+                        Bus
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>Driving License Number</label>
+
+            <input
+                type="text"
+                name="license_number"
+                placeholder="Enter license number"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>Vehicle Number</label>
+
+            <input
+                type="text"
+                name="vehicle_number"
+                placeholder="Example: MH12AB1234"
+                required
+            >
+
+        </div>
+
+
+        <button type="submit">
+            Continue to Monitoring →
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+</html>
+```

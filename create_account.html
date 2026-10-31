@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Create Account</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+
+            min-height: 100vh;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-family: Arial, sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at top left,
+                    #243b55,
+                    #141e30 55%,
+                    #0b1018
+                );
+
+        }
+
+        .card {
+
+            width: 400px;
+
+            max-width: 92%;
+
+            background: white;
+
+            padding: 35px;
+
+            border-radius: 20px;
+
+            box-shadow:
+                0 20px 60px
+                rgba(0,0,0,0.35);
+
+        }
+
+        .logo {
+
+            text-align: center;
+
+            font-size: 45px;
+
+            margin-bottom: 10px;
+
+        }
+
+        h1 {
+
+            text-align: center;
+
+            color: #172033;
+
+            margin-bottom: 5px;
+
+        }
+
+        .subtitle {
+
+            text-align: center;
+
+            color: #777;
+
+            margin-bottom: 25px;
+
+        }
+
+        input {
+
+            width: 100%;
+
+            padding: 14px;
+
+            margin-bottom: 15px;
+
+            border: 1px solid #ddd;
+
+            border-radius: 10px;
+
+            font-size: 15px;
+
+            outline: none;
+
+        }
+
+        input:focus {
+
+            border-color: #243b55;
+
+        }
+
+        button {
+
+            width: 100%;
+
+            padding: 14px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: #172033;
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+        }
+
+        button:hover {
+
+            background: #243b55;
+
+        }
+
+        .error {
+
+            background: #ffe5e5;
+
+            color: #c62828;
+
+            padding: 10px;
+
+            border-radius: 8px;
+
+            margin-bottom: 15px;
+
+            text-align: center;
+
+            font-size: 14px;
+
+        }
+
+        .login {
+
+            text-align: center;
+
+            margin-top: 20px;
+
+            color: #777;
+
+        }
+
+        .login a {
+
+            color: #172033;
+
+            font-weight: bold;
+
+            text-decoration: none;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="card">
+
+        <div class="logo">
+            🚗
+        </div>
+
+        <h1>
+            Create Account
+        </h1>
+
+        <p class="subtitle">
+            Driver Safety Monitoring System
+        </p>
+
+
+        {% if error %}
+
+        <div class="error">
+            {{ error }}
+        </div>
+
+        {% endif %}
+
+
+        <form method="POST">
+
+            <input
+                type="text"
+                name="username"
+                placeholder="Create Username"
+                required
+            >
+
+            <input
+                type="password"
+                name="password"
+                placeholder="Create Password"
+                required
+            >
+
+            <input
+                type="password"
+                name="confirm_password"
+                placeholder="Confirm Password"
+                required
+            >
+
+            <button type="submit">
+                Create Account
+            </button>
+
+        </form>
+
+
+        <div class="login">
+
+            Already have an account?
+
+            <a href="/">
+                Login
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

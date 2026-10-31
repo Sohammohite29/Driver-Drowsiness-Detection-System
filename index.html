@@ -1,0 +1,1850 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Smart Driver Safety Monitoring System</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #0b1120;
+            color: #e5e7eb;
+        }
+
+        /* ================= HEADER ================= */
+
+        header {
+            background: #111827;
+            border-bottom: 1px solid #263244;
+            padding: 16px 5%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo {
+            width: 44px;
+            height: 44px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #2563eb;
+            border-radius: 9px;
+
+            font-size: 22px;
+        }
+
+        .brand h2 {
+            color: white;
+            font-size: 18px;
+        }
+
+        .brand p {
+            color: #8b949e;
+            font-size: 11px;
+            margin-top: 3px;
+        }
+
+        .logout {
+            color: #d1d5db;
+            text-decoration: none;
+
+            border: 1px solid #374151;
+            padding: 9px 15px;
+            border-radius: 6px;
+
+            font-size: 12px;
+        }
+
+        .logout:hover {
+            background: #1f2937;
+        }
+
+        /* ================= MAIN ================= */
+
+        .container {
+            width: 90%;
+            max-width: 1250px;
+            margin: 30px auto;
+        }
+
+        .heading {
+            margin-bottom: 24px;
+        }
+
+        .heading h1 {
+            color: white;
+            font-size: 28px;
+            margin-bottom: 7px;
+        }
+
+        .heading p {
+            color: #8b949e;
+            font-size: 13px;
+        }
+
+        /* ================= COMMON CARD ================= */
+
+        .card {
+            background: #111827;
+            border: 1px solid #263244;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .card-title {
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .card-subtitle {
+            color: #6b7280;
+            font-size: 11px;
+            margin-top: -9px;
+            margin-bottom: 15px;
+        }
+
+        /* ================= DRIVER INFO ================= */
+
+        .driver-info {
+            margin-bottom: 20px;
+        }
+
+        .driver-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+        }
+
+        .driver-item,
+        .detection-item,
+        .analytics-item,
+        .safety-card {
+            background: #0f172a;
+            border: 1px solid #1e293b;
+            border-radius: 8px;
+        }
+
+        .driver-item {
+            padding: 14px;
+        }
+
+        .driver-label {
+            color: #8b949e;
+            font-size: 9px;
+            margin-bottom: 6px;
+        }
+
+        .driver-value {
+            color: white;
+            font-size: 13px;
+            font-weight: bold;
+            word-break: break-word;
+        }
+
+        /* ================= TOP STATISTICS ================= */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat {
+            background: #111827;
+            border: 1px solid #263244;
+
+            padding: 18px;
+            border-radius: 10px;
+
+            min-height: 105px;
+        }
+
+        .stat-title {
+            color: #8b949e;
+            font-size: 10px;
+            letter-spacing: 0.5px;
+            margin-bottom: 9px;
+        }
+
+        .stat-value {
+            color: white;
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+        .stat-small {
+            color: #6b7280;
+            font-size: 10px;
+            margin-top: 6px;
+        }
+
+        /* ================= MAIN GRID ================= */
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 20px;
+        }
+
+        /* ================= CAMERA ================= */
+
+        .camera {
+            background: #000;
+            border: 1px solid #202938;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .camera img {
+            width: 100%;
+            display: block;
+
+            max-height: 450px;
+            object-fit: contain;
+        }
+
+        .camera-info {
+            display: flex;
+            justify-content: space-between;
+
+            padding: 10px 12px;
+
+            background: #0f172a;
+            color: #8b949e;
+
+            font-size: 10px;
+        }
+
+        .live-dot {
+            width: 7px;
+            height: 7px;
+
+            display: inline-block;
+
+            background: #22c55e;
+            border-radius: 50%;
+
+            margin-right: 5px;
+        }
+
+        /* ================= STATUS ================= */
+
+        .status-box {
+            background: #0f172a;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 18px;
+        }
+
+        .status-label {
+            color: #8b949e;
+            font-size: 10px;
+            margin-bottom: 7px;
+        }
+
+        .status-text {
+            color: #4ade80;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        /* ================= BUTTONS ================= */
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            border: none;
+            padding: 10px 18px;
+
+            border-radius: 6px;
+
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .start {
+            background: #16a34a;
+        }
+
+        .stop {
+            background: #dc2626;
+        }
+
+        .reset {
+            background: #374151;
+        }
+
+        /* ================= DETECTION ================= */
+
+        .detection-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .detection-item {
+            padding: 14px;
+        }
+
+        .detection-item span {
+            color: #8b949e;
+            font-size: 10px;
+        }
+
+        .detection-item strong {
+            display: block;
+            color: white;
+            font-size: 17px;
+            margin-top: 5px;
+        }
+
+        /* ================= SETTINGS ================= */
+
+        .settings {
+            margin-top: 20px;
+        }
+
+        .setting {
+            display: flex;
+            justify-content: space-between;
+
+            padding: 11px 0;
+
+            border-bottom: 1px solid #263244;
+
+            font-size: 12px;
+        }
+
+        .setting:last-child {
+            border-bottom: none;
+        }
+
+        .setting span {
+            color: #8b949e;
+        }
+
+        .setting strong {
+            color: white;
+        }
+
+        /* ================= ANALYTICS ================= */
+
+        .analytics {
+            margin-top: 20px;
+        }
+
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .analytics-item {
+            padding: 15px;
+        }
+
+        .analytics-label {
+            color: #8b949e;
+            font-size: 10px;
+            margin-bottom: 7px;
+        }
+
+        .analytics-value {
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .analytics-note {
+            color: #64748b;
+            font-size: 9px;
+            margin-top: 5px;
+        }
+
+        /* ================= HISTORY ================= */
+
+        .history {
+            margin-top: 20px;
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .history-item {
+            background: #0f172a;
+            border: 1px solid #1e293b;
+
+            padding: 12px;
+            border-radius: 7px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 15px;
+        }
+
+        .history-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .history-number {
+            width: 30px;
+            height: 30px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #1e3a8a;
+            color: #93c5fd;
+
+            border-radius: 6px;
+
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .history-title {
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .history-details {
+            color: #8b949e;
+            font-size: 10px;
+            margin-top: 4px;
+        }
+
+        .history-right {
+            text-align: right;
+        }
+
+        .history-time {
+            color: #d1d5db;
+            font-size: 10px;
+        }
+
+        .history-type {
+            color: #f87171;
+            font-size: 9px;
+            margin-top: 4px;
+        }
+
+        .empty {
+            text-align: center;
+            color: #6b7280;
+
+            background: #0f172a;
+
+            padding: 25px;
+            border-radius: 8px;
+
+            font-size: 12px;
+        }
+
+        /* ================= ABOUT ================= */
+
+        .about {
+            margin-top: 20px;
+            line-height: 1.7;
+        }
+
+        .about p {
+            color: #999;
+            font-size: 12px;
+        }
+
+        /* ================= SAFETY FEATURES ================= */
+
+        .safety-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .safety-card {
+            padding: 15px;
+        }
+
+        .safety-card h4 {
+            color: white;
+            font-size: 12px;
+            margin-bottom: 7px;
+        }
+
+        .safety-card p {
+            color: #7d8797;
+            font-size: 10px;
+            line-height: 1.5;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            text-align: center;
+            color: #555;
+
+            font-size: 11px;
+            padding: 30px;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 1100px) {
+
+            .stats {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .driver-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+        }
+
+        @media (max-width: 950px) {
+
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .analytics-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            header {
+                padding: 14px 4%;
+            }
+
+            .container {
+                width: 92%;
+            }
+
+            .stats,
+            .driver-grid,
+            .analytics-grid,
+            .detection-grid,
+            .safety-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .heading h1 {
+                font-size: 23px;
+            }
+
+            .brand h2 {
+                font-size: 15px;
+            }
+
+            .history-item {
+                align-items: flex-start;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header>
+
+        <div class="brand">
+
+            <div class="logo">
+                🚗
+            </div>
+
+            <div>
+
+                <h2>Smart Driver Safety</h2>
+
+                <p>
+                    Drowsiness Detection & Monitoring System
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <a
+            href="{{ url_for('logout') }}"
+            class="logout">
+
+            Logout
+
+        </a>
+
+    </header>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <div class="container">
+
+        <div class="heading">
+
+            <h1>
+                Monitoring Dashboard
+            </h1>
+
+            <p>
+                Real-time driver monitoring, drowsiness detection
+                and safety analytics
+            </p>
+
+        </div>
+
+
+        <!-- ================= DRIVER INFORMATION ================= -->
+
+        <div class="card driver-info">
+
+            <div class="card-title">
+                Driver & Vehicle Information
+            </div>
+
+            <div class="card-subtitle">
+                Registered driver and vehicle details
+            </div>
+
+
+            <div class="driver-grid">
+
+                <div class="driver-item">
+
+                    <div class="driver-label">
+                        DRIVER NAME
+                    </div>
+
+                    <div class="driver-value">
+                        {{ profile.driver_name }}
+                    </div>
+
+                </div>
+
+
+                <div class="driver-item">
+
+                    <div class="driver-label">
+                        AGE
+                    </div>
+
+                    <div class="driver-value">
+                        {{ profile.age }}
+                    </div>
+
+                </div>
+
+
+                <div class="driver-item">
+
+                    <div class="driver-label">
+                        LICENSE NUMBER
+                    </div>
+
+                    <div class="driver-value">
+                        {{ profile.license_number }}
+                    </div>
+
+                </div>
+
+
+                <div class="driver-item">
+
+                    <div class="driver-label">
+                        VEHICLE NUMBER
+                    </div>
+
+                    <div class="driver-value">
+                        {{ profile.vehicle_number }}
+                    </div>
+
+                </div>
+
+
+                <div class="driver-item">
+
+                    <div class="driver-label">
+                        VEHICLE TYPE
+                    </div>
+
+                    <div class="driver-value">
+                        {{ profile.vehicle_type }}
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= TOP STATISTICS ================= -->
+
+        <div class="stats">
+
+            <div class="stat">
+
+                <div class="stat-title">
+                    MONITORING STATUS
+                </div>
+
+                <div
+                    class="stat-value"
+                    id="monitorStatus">
+
+                    Active
+
+                </div>
+
+                <div class="stat-small">
+                    System monitoring state
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-title">
+                    CURRENT EAR
+                </div>
+
+                <div
+                    class="stat-value"
+                    id="earValue">
+
+                    0.00
+
+                </div>
+
+                <div class="stat-small">
+                    Eye Aspect Ratio
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-title">
+                    TOTAL ALERTS
+                </div>
+
+                <div
+                    class="stat-value"
+                    id="alertCount">
+
+                    0
+
+                </div>
+
+                <div class="stat-small">
+                    Detected in current session
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-title">
+                    MONITORING TIME
+                </div>
+
+                <div
+                    class="stat-value"
+                    id="monitorTime">
+
+                    00:00
+
+                </div>
+
+                <div class="stat-small">
+                    Current session duration
+                </div>
+
+            </div>
+
+
+            <!-- NEW SAFETY SCORE -->
+
+            <div class="stat">
+
+                <div class="stat-title">
+                    SAFETY SCORE
+                </div>
+
+                <div
+                    class="stat-value"
+                    id="safetyScore">
+
+                    100/100
+
+                </div>
+
+                <div class="stat-small">
+                    Overall safety score
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= MAIN GRID ================= -->
+
+        <div class="main-grid">
+
+
+            <!-- CAMERA -->
+
+            <div class="card">
+
+                <div class="card-title">
+                    Live Camera Feed
+                </div>
+
+                <div class="card-subtitle">
+                    Real-time computer vision monitoring
+                </div>
+
+
+                <div class="camera">
+
+                    <img
+                        src="{{ url_for('video_feed') }}"
+                        alt="Live Camera Feed">
+
+
+                    <div class="camera-info">
+
+                        <span>
+
+                            <span class="live-dot"></span>
+
+                            LIVE CAMERA
+
+                        </span>
+
+                        <span>
+                            MediaPipe Face Mesh
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CONTROL PANEL -->
+
+            <div>
+
+
+                <!-- SYSTEM STATUS -->
+
+                <div class="card">
+
+                    <div class="card-title">
+                        System Status
+                    </div>
+
+
+                    <div class="status-box">
+
+                        <div class="status-label">
+                            CURRENT DETECTION
+                        </div>
+
+                        <div
+                            class="status-text"
+                            id="systemStatus">
+
+                            Waiting for Camera
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="buttons">
+
+                        <button
+                            class="start"
+                            id="startButton"
+                            onclick="startMonitoring()">
+
+                            Start Monitoring
+
+                        </button>
+
+
+                        <button
+                            class="stop"
+                            id="stopButton"
+                            onclick="stopMonitoring()">
+
+                            Stop Monitoring
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- LIVE DETECTION -->
+
+                <div
+                    class="card"
+                    style="margin-top:20px;">
+
+                    <div class="card-title">
+                        Live Detection
+                    </div>
+
+
+                    <div class="detection-grid">
+
+                        <div class="detection-item">
+
+                            <span>
+                                CURRENT EAR
+                            </span>
+
+                            <strong id="liveEar">
+                                0.00
+                            </strong>
+
+                        </div>
+
+
+                        <div class="detection-item">
+
+                            <span>
+                                DETECTION STATUS
+                            </span>
+
+                            <strong id="liveStatus">
+                                Waiting
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DETECTION SETTINGS -->
+
+                <div class="card settings">
+
+                    <div class="card-title">
+                        Detection Settings
+                    </div>
+
+
+                    <div class="setting">
+
+                        <span>
+                            EAR Threshold
+                        </span>
+
+                        <strong id="earThreshold">
+                            0.22
+                        </strong>
+
+                    </div>
+
+
+                    <div class="setting">
+
+                        <span>
+                            Drowsiness Time
+                        </span>
+
+                        <strong id="drowsinessTime">
+                            2.0 sec
+                        </strong>
+
+                    </div>
+
+
+                    <div class="setting">
+
+                        <span>
+                            Detection Method
+                        </span>
+
+                        <strong>
+                            MediaPipe + EAR
+                        </strong>
+
+                    </div>
+
+
+                    <div class="setting">
+
+                        <span>
+                            Alarm
+                        </span>
+
+                        <strong>
+                            Audio Alert
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= SESSION ANALYTICS ================= -->
+
+        <div class="card analytics">
+
+            <div class="card-title">
+                Session Analytics
+            </div>
+
+            <div class="card-subtitle">
+                Performance summary based on actual monitoring data
+            </div>
+
+
+            <div class="analytics-grid">
+
+
+                <div class="analytics-item">
+
+                    <div class="analytics-label">
+                        SESSION START
+                    </div>
+
+                    <div
+                        class="analytics-value"
+                        id="sessionStart">
+
+                        --
+
+                    </div>
+
+                    <div class="analytics-note">
+                        Monitoring start time
+                    </div>
+
+                </div>
+
+
+                <div class="analytics-item">
+
+                    <div class="analytics-label">
+                        SESSION DURATION
+                    </div>
+
+                    <div
+                        class="analytics-value"
+                        id="sessionDuration">
+
+                        00:00
+
+                    </div>
+
+                    <div class="analytics-note">
+                        Total monitoring duration
+                    </div>
+
+                </div>
+
+
+                <div class="analytics-item">
+
+                    <div class="analytics-label">
+                        AVERAGE EAR
+                    </div>
+
+                    <div
+                        class="analytics-value"
+                        id="averageEar">
+
+                        0.00
+
+                    </div>
+
+                    <div class="analytics-note">
+                        Average detected eye ratio
+                    </div>
+
+                </div>
+
+
+                <div class="analytics-item">
+
+                    <div class="analytics-label">
+                        LONGEST DROWSINESS
+                    </div>
+
+                    <div
+                        class="analytics-value"
+                        id="longestDrowsiness">
+
+                        0.0 sec
+
+                    </div>
+
+                    <div class="analytics-note">
+                        Longest detected event
+                    </div>
+
+                </div>
+
+
+                <div class="analytics-item">
+
+                    <div class="analytics-label">
+                        TOTAL ALERTS
+                    </div>
+
+                    <div
+                        class="analytics-value"
+                        id="analyticsAlerts">
+
+                        0
+
+                    </div>
+
+                    <div class="analytics-note">
+                        Drowsiness events
+                    </div>
+
+                </div>
+
+
+                <div class="analytics-item">
+
+                    <div class="analytics-label">
+                        SYSTEM STATE
+                    </div>
+
+                    <div
+                        class="analytics-value"
+                        id="analyticsStatus">
+
+                        Active
+
+                    </div>
+
+                    <div class="analytics-note">
+                        Current monitoring state
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= ALERT HISTORY ================= -->
+
+        <div class="card history">
+
+            <div class="history-header">
+
+                <div>
+
+                    <div
+                        class="card-title"
+                        style="margin-bottom:4px;">
+
+                        Drowsiness Alert History
+
+                    </div>
+
+                    <div
+                        class="card-subtitle"
+                        style="margin:0;">
+
+                        Detailed record of detected drowsiness events
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="reset"
+                    onclick="resetAlerts()">
+
+                    Reset History
+
+                </button>
+
+            </div>
+
+
+            <div
+                class="history-list"
+                id="history">
+
+                <div class="empty">
+                    No drowsiness alerts detected yet.
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= ABOUT ================= -->
+
+        <div class="card about">
+
+            <div class="card-title">
+                About the System
+            </div>
+
+            <p>
+
+                The Smart Driver Safety Monitoring System is a
+                computer vision based safety application designed
+                to monitor a driver's eye activity in real time.
+                The system calculates the Eye Aspect Ratio (EAR)
+                using facial landmarks. When prolonged eye closure
+                is detected, the system identifies a drowsiness
+                event and activates an audio warning.
+
+            </p>
+
+        </div>
+
+
+        <!-- ================= SAFETY FEATURES ================= -->
+
+        <div class="safety-grid">
+
+
+            <div class="safety-card">
+
+                <h4>
+                    Real-Time Monitoring
+                </h4>
+
+                <p>
+                    The camera continuously monitors the
+                    driver's face and eye activity.
+                </p>
+
+            </div>
+
+
+            <div class="safety-card">
+
+                <h4>
+                    Drowsiness Detection
+                </h4>
+
+                <p>
+                    Eye Aspect Ratio is used to identify
+                    prolonged eye closure.
+                </p>
+
+            </div>
+
+
+            <div class="safety-card">
+
+                <h4>
+                    Audio Warning
+                </h4>
+
+                <p>
+                    An audible alarm helps regain the
+                    driver's attention during drowsiness.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        Smart Driver Safety Monitoring System
+        &nbsp; • &nbsp;
+        Computer Vision Project
+        &nbsp; • &nbsp;
+        2026
+
+    </footer>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+        /* ================= FORMAT TIME ================= */
+
+        function formatTime(seconds) {
+
+            seconds = Number(seconds) || 0;
+
+            const hours =
+                Math.floor(seconds / 3600);
+
+            const minutes =
+                Math.floor((seconds % 3600) / 60);
+
+            const secs =
+                Math.floor(seconds % 60);
+
+
+            if (hours > 0) {
+
+                return (
+                    String(hours).padStart(2, "0")
+                    + ":"
+                    + String(minutes).padStart(2, "0")
+                    + ":"
+                    + String(secs).padStart(2, "0")
+                );
+
+            }
+
+
+            return (
+                String(minutes).padStart(2, "0")
+                + ":"
+                + String(secs).padStart(2, "0")
+            );
+
+        }
+
+
+        /* ================= UPDATE DASHBOARD ================= */
+
+        async function updateSystemStats() {
+
+            try {
+
+                const response =
+                    await fetch("/system_stats");
+
+
+                if (!response.ok) {
+                    return;
+                }
+
+
+                const data =
+                    await response.json();
+
+
+                /* Top statistics */
+
+                document.getElementById(
+                    "monitorStatus"
+                ).innerText =
+                    data.monitoring_active
+                        ? "Active"
+                        : "Stopped";
+
+
+                document.getElementById(
+                    "earValue"
+                ).innerText =
+                    Number(data.ear || 0).toFixed(2);
+
+
+                document.getElementById(
+                    "alertCount"
+                ).innerText =
+                    data.total_alerts || 0;
+
+
+                document.getElementById(
+                    "monitorTime"
+                ).innerText =
+                    formatTime(
+                        data.monitoring_seconds
+                    );
+
+
+                /* Safety Score */
+
+                document.getElementById(
+                    "safetyScore"
+                ).innerText =
+                    (data.safety_score ?? 100)
+                    + "/100";
+
+
+                /* Live Detection */
+
+                document.getElementById(
+                    "liveEar"
+                ).innerText =
+                    Number(data.ear || 0).toFixed(2);
+
+
+                document.getElementById(
+                    "systemStatus"
+                ).innerText =
+                    data.status || "Waiting";
+
+
+                document.getElementById(
+                    "liveStatus"
+                ).innerText =
+                    data.status || "Waiting";
+
+
+                /* Detection Settings */
+
+                if (data.ear_threshold !== undefined) {
+
+                    document.getElementById(
+                        "earThreshold"
+                    ).innerText =
+                        Number(
+                            data.ear_threshold
+                        ).toFixed(2);
+
+                }
+
+
+                if (data.drowsiness_time !== undefined) {
+
+                    document.getElementById(
+                        "drowsinessTime"
+                    ).innerText =
+                        Number(
+                            data.drowsiness_time
+                        ).toFixed(1)
+                        + " sec";
+
+                }
+
+
+                /* Session Analytics */
+
+                document.getElementById(
+                    "sessionStart"
+                ).innerText =
+                    data.session_start || "--";
+
+
+                document.getElementById(
+                    "sessionDuration"
+                ).innerText =
+                    formatTime(
+                        data.session_duration
+                    );
+
+
+                document.getElementById(
+                    "averageEar"
+                ).innerText =
+                    Number(
+                        data.average_ear || 0
+                    ).toFixed(2);
+
+
+                document.getElementById(
+                    "longestDrowsiness"
+                ).innerText =
+                    Number(
+                        data.longest_drowsiness || 0
+                    ).toFixed(1)
+                    + " sec";
+
+
+                document.getElementById(
+                    "analyticsAlerts"
+                ).innerText =
+                    data.total_alerts || 0;
+
+
+                document.getElementById(
+                    "analyticsStatus"
+                ).innerText =
+                    data.monitoring_active
+                        ? "Active"
+                        : "Stopped";
+
+
+                /* Button State */
+
+                document.getElementById(
+                    "startButton"
+                ).disabled =
+                    data.monitoring_active;
+
+
+                document.getElementById(
+                    "stopButton"
+                ).disabled =
+                    !data.monitoring_active;
+
+            }
+
+            catch (error) {
+
+                console.log(
+                    "System update error:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        /* ================= START MONITORING ================= */
+
+        async function startMonitoring() {
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/start_monitoring",
+                        {
+                            method: "POST"
+                        }
+                    );
+
+
+                if (response.ok) {
+                    updateSystemStats();
+                }
+
+            }
+
+            catch (error) {
+
+                console.log(
+                    "Start error:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        /* ================= STOP MONITORING ================= */
+
+        async function stopMonitoring() {
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/stop_monitoring",
+                        {
+                            method: "POST"
+                        }
+                    );
+
+
+                if (response.ok) {
+
+                    window.location.href =
+                        "{{ url_for('session_report') }}";
+
+                }
+
+            }
+
+            catch (error) {
+
+                console.log(
+                    "Stop error:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        /* ================= ALERT HISTORY ================= */
+
+        async function updateAlerts() {
+
+            try {
+
+                const response =
+                    await fetch("/alerts");
+
+
+                if (!response.ok) {
+                    return;
+                }
+
+
+                const data =
+                    await response.json();
+
+
+                const history =
+                    document.getElementById("history");
+
+
+                document.getElementById(
+                    "alertCount"
+                ).innerText =
+                    data.count || 0;
+
+
+                document.getElementById(
+                    "analyticsAlerts"
+                ).innerText =
+                    data.count || 0;
+
+
+                history.innerHTML = "";
+
+
+                if (
+                    !data.history ||
+                    data.history.length === 0
+                ) {
+
+                    history.innerHTML = `
+                        <div class="empty">
+                            No drowsiness alerts detected yet.
+                        </div>
+                    `;
+
+                    return;
+
+                }
+
+
+                data.history.forEach(
+                    function(alert) {
+
+                        const ear =
+                            alert.ear !== undefined
+                                ? Number(alert.ear).toFixed(2)
+                                : "--";
+
+
+                        const duration =
+                            alert.duration !== undefined
+                                ? Number(alert.duration).toFixed(1)
+                                  + " sec"
+                                : "--";
+
+
+                        const item =
+                            document.createElement("div");
+
+
+                        item.className =
+                            "history-item";
+
+
+                        item.innerHTML = `
+
+                            <div class="history-left">
+
+                                <div class="history-number">
+                                    ${alert.number}
+                                </div>
+
+                                <div>
+
+                                    <div class="history-title">
+                                        Drowsiness Alert
+                                    </div>
+
+                                    <div class="history-details">
+                                        EAR: ${ear}
+                                        &nbsp; • &nbsp;
+                                        Duration: ${duration}
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="history-right">
+
+                                <div class="history-time">
+                                    ${alert.time || "--"}
+                                </div>
+
+                                <div class="history-type">
+                                    ${alert.type || "Drowsiness"}
+                                </div>
+
+                            </div>
+
+                        `;
+
+
+                        history.appendChild(item);
+
+                    }
+                );
+
+            }
+
+            catch (error) {
+
+                console.log(
+                    "Alert update error:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        /* ================= RESET ALERTS ================= */
+
+        async function resetAlerts() {
+
+            if (
+                !confirm(
+                    "Are you sure you want to reset alert history?"
+                )
+            ) {
+                return;
+            }
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/reset_alerts",
+                        {
+                            method: "POST"
+                        }
+                    );
+
+
+                if (response.ok) {
+
+                    updateAlerts();
+                    updateSystemStats();
+
+                }
+
+            }
+
+            catch (error) {
+
+                console.log(
+                    "Reset error:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        /* ================= INITIAL LOAD ================= */
+
+        updateSystemStats();
+        updateAlerts();
+
+
+        /* ================= AUTO UPDATE ================= */
+
+        setInterval(
+            updateSystemStats,
+            1000
+        );
+
+        setInterval(
+            updateAlerts,
+            1500
+        );
+
+    </script>
+
+</body>
+
+</html>

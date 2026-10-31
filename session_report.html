@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Final Session Report</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #0b1120;
+            color: #e2e8f0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .title {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            color: #94a3b8;
+            margin-top: 6px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            border: 1px solid #334155;
+            color: #e2e8f0;
+            background: #111827;
+            font-size: 14px;
+        }
+
+        .btn:hover {
+            background: #1e293b;
+        }
+
+        .card {
+            background: #111827;
+            border: 1px solid #1e293b;
+            border-radius: 10px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        .card-subtitle {
+            color: #94a3b8;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .status {
+            padding: 18px;
+            border-radius: 8px;
+            background: #0f172a;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .status-label {
+            color: #94a3b8;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .status-value {
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        .safe {
+            color: #22c55e;
+        }
+
+        .warning {
+            color: #f59e0b;
+        }
+
+        .report-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .report-item {
+            background: #0f172a;
+            border: 1px solid #1e293b;
+            border-radius: 8px;
+            padding: 18px;
+        }
+
+        .label {
+            color: #94a3b8;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        .value {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .footer {
+            text-align: center;
+            color: #64748b;
+            font-size: 13px;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 15px;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .report-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="header">
+
+            <div>
+                <div class="title">
+                    Final Session Report
+                </div>
+
+                <div class="subtitle">
+                    Driver Drowsiness Detection System
+                </div>
+            </div>
+
+            <div class="buttons">
+
+                <a href="{{ url_for('dashboard') }}" class="btn">
+                    Back to Dashboard
+                </a>
+
+                <a href="{{ url_for('logout') }}" class="btn">
+                    Logout
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                Overall Safety Status
+            </div>
+
+            <div class="card-subtitle">
+                Summary of the completed monitoring session
+            </div>
+
+            <div class="status">
+
+                <div class="status-label">
+                    SESSION STATUS
+                </div>
+
+                <div
+                    id="safetyStatus"
+                    class="status-value safe">
+                    SAFE
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                Session Analytics
+            </div>
+
+            <div class="card-subtitle">
+                Important statistics recorded during monitoring
+            </div>
+
+            <div class="report-grid">
+
+                <div class="report-item">
+
+                    <div class="label">
+                        SESSION START
+                    </div>
+
+                    <div
+                        id="sessionStart"
+                        class="value">
+                        --
+                    </div>
+
+                </div>
+
+
+                <div class="report-item">
+
+                    <div class="label">
+                        TOTAL JOURNEY TIME
+                    </div>
+
+                    <div
+                        id="sessionDuration"
+                        class="value">
+                        00:00
+                    </div>
+
+                </div>
+
+
+                <div class="report-item">
+
+                    <div class="label">
+                        TOTAL DROWSINESS ALERTS
+                    </div>
+
+                    <div
+                        id="totalAlerts"
+                        class="value">
+                        0
+                    </div>
+
+                </div>
+
+
+                <div class="report-item">
+
+                    <div class="label">
+                        AVERAGE EAR
+                    </div>
+
+                    <div
+                        id="averageEar"
+                        class="value">
+                        --
+                    </div>
+
+                </div>
+
+
+                <div class="report-item">
+
+                    <div class="label">
+                        LONGEST DROWSINESS
+                    </div>
+
+                    <div
+                        id="longestDrowsiness"
+                        class="value">
+                        --
+                    </div>
+
+                </div>
+
+
+                <div class="report-item">
+
+                    <div class="label">
+                        DETECTION METHOD
+                    </div>
+
+                    <div class="value">
+                        MediaPipe Face Mesh
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer">
+            Driver Drowsiness Detection System
+            <br>
+            Smart Driver Safety & Monitoring
+        </div>
+
+    </div>
+
+
+    <script>
+
+        function formatTime(seconds) {
+
+            if (!seconds || seconds < 0) {
+                return "00:00";
+            }
+
+            seconds = Math.floor(seconds);
+
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+
+            return (
+                String(minutes).padStart(2, "0")
+                + ":"
+                + String(remainingSeconds).padStart(2, "0")
+            );
+        }
+
+
+        function updateReport() {
+
+            fetch("/system_stats")
+                .then(response => response.json())
+                .then(data => {
+
+                    document.getElementById(
+                        "sessionStart"
+                    ).innerText =
+                        data.session_start || "--";
+
+
+                    document.getElementById(
+                        "sessionDuration"
+                    ).innerText =
+                        formatTime(data.monitoring_time);
+
+
+                    document.getElementById(
+                        "totalAlerts"
+                    ).innerText =
+                        data.alert_count ?? 0;
+
+
+                    document.getElementById(
+                        "averageEar"
+                    ).innerText =
+                        data.average_ear !== undefined
+                            ? Number(data.average_ear).toFixed(3)
+                            : "--";
+
+
+                    document.getElementById(
+                        "longestDrowsiness"
+                    ).innerText =
+                        data.longest_drowsiness !== undefined
+                            ? formatTime(data.longest_drowsiness)
+                            : "--";
+
+
+                    const status =
+                        document.getElementById("safetyStatus");
+
+
+                    if ((data.alert_count ?? 0) > 0) {
+
+                        status.innerText =
+                            "NEEDS ATTENTION";
+
+                        status.className =
+                            "status-value warning";
+
+                    } else {
+
+                        status.innerText =
+                            "SAFE";
+
+                        status.className =
+                            "status-value safe";
+                    }
+
+                })
+                .catch(error => {
+
+                    console.error(
+                        "Unable to load session report:",
+                        error
+                    );
+
+                });
+
+        }
+
+
+        updateReport();
+
+    </script>
+
+</body>
+
+</html>
